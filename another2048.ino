@@ -14,6 +14,10 @@
 
 #define BuzzerPin 3;
 
+#include <SPI.h>
+#include <Gamebuino.h>
+Gamebuino gb;
+
 enum directions {
   down,
   left,
@@ -21,12 +25,11 @@ enum directions {
   right
 };
 
-#include <SPI.h>
-#include <Gamebuino.h>
-Gamebuino gb;
-
 extern const uint8_t font3x5[];
 extern const uint8_t font5x7[];
+
+#define initScreenFont font5x7
+#define initScreenText "another2048"
 
 #define numberFont font3x5
 #define numberStartX 7
@@ -43,16 +46,25 @@ extern const uint8_t font5x7[];
 #define scoreX 5
 #define scoreY 40
 
-#define looseScreenX 5
-#define looseScreenY 15
+#define maxNumber 8192
+#define victoryRectX 2
+#define victoryRectY 13
+#define victoryRectWidth 80
+#define victoryRectHeight 14
+#define victoryTextX 19
+#define victoryTextY 16
+#define victoryTextFont font5x7
+#define victoryTextt "Victory!"
 
 #define debounceDelay 100
 
 long debounceNextMillis = 0;
 
-int16_t gameMatrix[4][4] = { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 2, 2, 0, 0 }, { 0, 0, 0, 0 } };
+int16_t gameMatrix[4][4] = { {0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 2, 2, 0, 0 }, { 0, 0, 0, 0 } };
 int16_t oldMatrix[4][4];
-int16_t score = 0;
+int32_t score = 4;
+
+bool victory = false;
 
 uint8_t randGen = 0;
 uint8_t randGenFor4 = 0;
@@ -63,8 +75,8 @@ void setup() {
 
   // put your setup code here, to run once:
   gb.begin();
-  gb.display.setFont(font5x7);
-  gb.titleScreen(F("another2048"));
+  gb.display.setFont(initScreenFont);
+  gb.titleScreen(F(initScreenText));
   gb.pickRandomSeed();
   gb.battery.show = false;  //hide the battery indicator
 }
@@ -77,7 +89,7 @@ void loop() {
 
   boolean btnPressed = false;
 
-  if (millis() > debounceNextMillis) {
+  if ((millis() > debounceNextMillis) && !victory) {
     copyOldMatrix();
 
     if (gb.buttons.pressed(BTN_DOWN)) {
@@ -98,11 +110,11 @@ void loop() {
     };
 
     if (btnPressed) {
+      victory = checkvictory();
       debounceNextMillis = millis() + debounceDelay;
       gb.sound.playTick();
       if (!checkOldMatrix()) {
         randomPlaceNumber();
-        score += 2;
       }
     }
   }
@@ -131,6 +143,17 @@ void drawGameMatrix() {
   gb.display.cursorX = scoreX;
   gb.display.cursorY = scoreY;
   gb.display.print("score: " + String(score));
+  //victory screen
+  if (victory) {
+    gb.display.setColor(BLACK, WHITE);
+    gb.display.fillRect(victoryRectX, victoryRectY, victoryRectWidth, victoryRectHeight);
+    gb.display.setColor(WHITE, BLACK);
+    gb.display.setFont(victoryTextFont);
+    gb.display.cursorX = victoryTextX;
+    gb.display.cursorY = victoryTextY;
+    gb.display.print(victoryTextt);
+    gb.display.setColor(BLACK, WHITE);
+  }
 }
 
 void moveMatrix(int8_t dir) {
@@ -249,6 +272,7 @@ int8_t randomPlaceNumber() {
         if (randPos == 0) {
           //gameMatrix[iy][ix] = 2;
           gameMatrix[iy][ix] = (randGenFor4 == 0) ? 4 : 2;
+          score += gameMatrix[iy][ix];
         }  //else Serial.println("falsch");
         randPos--;
       }
@@ -273,6 +297,15 @@ boolean checkOldMatrix() {
     }
   }
   return true;
+}
+
+boolean checkvictory() {
+  for (int8_t ix = 0; ix < 4; ix++) {
+    for (int8_t iy = 0; iy < 4; iy++) {
+      if (gameMatrix[iy][ix] > maxNumber) return true;
+    }
+  }
+  return false;
 }
 
 int8_t positive_modulo(uint8_t i, int8_t n) {

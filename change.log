@@ -4,7 +4,7 @@ Version Year/Month/Day
 	Repository created
 
 0.1.1 2023/11/06
-	Compiled for Arduino Uno
+	Compiled for Arduino UNO
 	This change.log added
 
 0.1.2 2023/11/06
@@ -23,3 +23,6 @@ Version Year/Month/Day
 0.1.6 2030/11/10
 	Probability generation for a 4 changed
 		for this added new variable randGenFor4 which is counted and calculated modulo 10 every void loop step
+
+0.1.7 2023/11/10
+	Victory screen added to prevent numbers from overflowing the cells if they were reaching 16384
