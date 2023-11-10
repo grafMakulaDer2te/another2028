@@ -19,3 +19,7 @@ Version Year/Month/Day
 
 0.1.5 2030/11/10
 	Possibility that a 4 appears added and probability for this set to 10%
+
+0.1.6 2030/11/10
+	Probability generation for a 4 changed
+		for this added new variable randGenFor4 which is counted and calculated modulo 10 every void loop step

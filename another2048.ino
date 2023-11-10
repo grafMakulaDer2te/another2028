@@ -55,6 +55,7 @@ int16_t oldMatrix[4][4];
 int16_t score = 0;
 
 uint8_t randGen = 0;
+uint8_t randGenFor4 = 0;
 
 void setup() {
   //for debuging
@@ -71,6 +72,9 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   randGen++;
+  randGenFor4++;
+  randGenFor4 = positive_modulo(randGenFor4, 10);
+
   boolean btnPressed = false;
 
   if (millis() > debounceNextMillis) {
@@ -244,7 +248,7 @@ int8_t randomPlaceNumber() {
       if (gameMatrix[iy][ix] == 0) {
         if (randPos == 0) {
           //gameMatrix[iy][ix] = 2;
-          gameMatrix[iy][ix] = (positive_modulo(randGen, 10)==0) ? 4 : 2;
+          gameMatrix[iy][ix] = (randGenFor4 == 0) ? 4 : 2;
         }  //else Serial.println("falsch");
         randPos--;
       }
