@@ -54,7 +54,7 @@ int16_t gameMatrix[4][4] = { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 2, 2, 0, 0 }, { 0
 int16_t oldMatrix[4][4];
 int16_t score = 0;
 
-int8_t randGen = 0;
+uint8_t randGen = 0;
 
 void setup() {
   //for debuging
@@ -243,7 +243,8 @@ int8_t randomPlaceNumber() {
     for (int8_t iy = 0; iy < 4; iy++) {
       if (gameMatrix[iy][ix] == 0) {
         if (randPos == 0) {
-          gameMatrix[iy][ix] = 2;
+          //gameMatrix[iy][ix] = 2;
+          gameMatrix[iy][ix] = (positive_modulo(randGen, 10)==0) ? 4 : 2;
         }  //else Serial.println("falsch");
         randPos--;
       }

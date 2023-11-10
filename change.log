@@ -13,6 +13,9 @@ Version Year/Month/Day
 0.1.3 2023/11/08
 	README.md revised
 
-0.1.4 2023/11/08
+0.1.4 2023/11/10
 	Start pattern changed
 		2 and 4 has become 2 and 2
+
+0.1.5 2030/11/10
+	Possibility that a 4 appears added and probability for this set to 10%
