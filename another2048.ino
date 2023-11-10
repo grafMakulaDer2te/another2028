@@ -50,7 +50,7 @@ extern const uint8_t font5x7[];
 
 long debounceNextMillis = 0;
 
-int16_t gameMatrix[4][4] = { { 0, 0, 0, 0 }, { 0, 4, 0, 0 }, { 0, 0, 2, 0 }, { 0, 0, 0, 0 } };
+int16_t gameMatrix[4][4] = { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 2, 2, 0, 0 }, { 0, 0, 0, 0 } };
 int16_t oldMatrix[4][4];
 int16_t score = 0;
 
