@@ -1,6 +1,6 @@
 # another2048 for the gamebuino classic
 ## Description
-This is another 2048 game for the gamebuino classic. I created this myself because the original from the wiki does not work properly for me and crashes after a few minutes each time leaving a blank screen.
+This is another 2048 game for the gamebuino classic. I created this myself because the original from the wiki does not work properly for me.
 ## Setup
 Copy the build/arduino.avr.uno/another2048.ino.hex to your SD-card (not tested jet because my DIY gambuino has no SD-card).
 Alternatively open the another2048.ino in your Arduino IDE and upload it directly.

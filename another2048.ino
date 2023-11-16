@@ -110,7 +110,7 @@ void loop() {
     };
 
     if (btnPressed) {
-      victory = checkvictory();
+      victory = checkVictory();
       debounceNextMillis = millis() + debounceDelay;
       gb.sound.playTick();
       if (!checkOldMatrix()) {
@@ -299,7 +299,7 @@ boolean checkOldMatrix() {
   return true;
 }
 
-boolean checkvictory() {
+boolean checkVictory() {
   for (int8_t ix = 0; ix < 4; ix++) {
     for (int8_t iy = 0; iy < 4; iy++) {
       if (gameMatrix[iy][ix] > maxNumber) return true;
