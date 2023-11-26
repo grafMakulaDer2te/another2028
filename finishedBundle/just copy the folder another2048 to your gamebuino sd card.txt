@@ -1,0 +1,1 @@
+just copy the folder another2048 to your gamebuino sd card

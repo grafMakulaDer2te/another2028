@@ -1,6 +1,4 @@
-#include <SPI.h>
-#include <Gamebuino.h>
-Gamebuino gb;
+#include <Gamebuino-Compat.h>
 
 #define SCR_CLK 13;
 #define SCR_DIN 11;

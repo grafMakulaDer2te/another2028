@@ -26,6 +26,3 @@ Version Year/Month/Day
 
 0.1.7 2023/11/10
 	Victory screen added to prevent numbers from overflowing the cells if they were reaching 16384
-
-0.1.8 2023/11/26
-	Code for Gamebuino Classic and Meta adapted to each other

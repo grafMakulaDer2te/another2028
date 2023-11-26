@@ -1,9 +1,9 @@
 # another2048 for the gamebuino classic
 ## Description
-This is another 2048 game for the gamebuino classic. I created this myself because the original from the wiki does not work properly for me.
+This is a port of my 2048 game from the Gamebuino Classic to the Gamebuino Meta.
+For the Gamebuino Classic I created this myself because the original from the wiki does not work properly for me.
 ## Setup
-Copy the build/arduino.avr.uno/another2048.ino.hex onto your SD-card (not tested jet because my DIY gambuino has no SD-card).
-Alternatively open the another2048.ino in your Arduino IDE and upload it directly.
+Copy the finishedBundle/another2028 folder onto your Gamebuino SD-card.
 ## Usage
 Just control it with the D-pad.
 If you play beyond 8192 the message "Victory!" appears to prevent the numbers from overflowing the cells.
