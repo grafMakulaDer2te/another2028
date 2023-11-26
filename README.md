@@ -1,4 +1,4 @@
-# another2048 for the gamebuino classic
+# another2048 for the Gamebuino Meta
 ## Description
 This is a port of my 2048 game from the Gamebuino Classic to the Gamebuino Meta.
 For the Gamebuino Classic I created this myself because the original from the wiki does not work properly for me.
