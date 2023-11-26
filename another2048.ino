@@ -1,3 +1,7 @@
+#include <SPI.h>
+#include <Gamebuino.h>
+Gamebuino gb;
+
 #define SCR_CLK 13;
 #define SCR_DIN 11;
 #define SCR_DC A2;
@@ -14,15 +18,13 @@
 
 #define BuzzerPin 3;
 
-#include <SPI.h>
-#include <Gamebuino.h>
-Gamebuino gb;
+Gamebuino gB;
 
 enum directions {
-  down,
-  left,
-  up,
-  right
+  dowwn,
+  lefft,
+  uup,
+  righht
 };
 
 extern const uint8_t font3x5[];
@@ -73,12 +75,12 @@ void setup() {
   //for debuging
   //Serial.begin(115200);
 
-  // put your setup code here, to run once:
-  gb.begin();
-  gb.display.setFont(initScreenFont);
-  gb.titleScreen(F(initScreenText));
-  gb.pickRandomSeed();
-  gb.battery.show = false;  //hide the battery indicator
+  // put your setuup code here, to run once:
+  gB.begin();
+  gB.display.setFont(initScreenFont);
+  gB.titleScreen(F(initScreenText));
+  gB.pickRandomSeed();
+  gB.battery.show = false;  //hide the battery indicator
 }
 
 void loop() {
@@ -92,75 +94,75 @@ void loop() {
   if ((millis() > debounceNextMillis) && !victory) {
     copyOldMatrix();
 
-    if (gb.buttons.pressed(BTN_DOWN)) {
-      moveMatrix(down);
+    if (gB.buttons.pressed(BTN_DOWN)) {
+      moveMatrix(dowwn);
       btnPressed = true;
     }
-    if (gb.buttons.pressed(BTN_UP)) {
-      moveMatrix(up);
+    if (gB.buttons.pressed(BTN_UP)) {
+      moveMatrix(uup);
       btnPressed = true;
     };
-    if (gb.buttons.pressed(BTN_LEFT)) {
-      moveMatrix(left);
+    if (gB.buttons.pressed(BTN_LEFT)) {
+      moveMatrix(lefft);
       btnPressed = true;
     };
-    if (gb.buttons.pressed(BTN_RIGHT)) {
-      moveMatrix(right);
+    if (gB.buttons.pressed(BTN_RIGHT)) {
+      moveMatrix(righht);
       btnPressed = true;
     };
 
     if (btnPressed) {
       victory = checkVictory();
       debounceNextMillis = millis() + debounceDelay;
-      gb.sound.playTick();
+      gB.sound.playTick();
       if (!checkOldMatrix()) {
         randomPlaceNumber();
       }
     }
   }
 
-  if (gb.update()) {
+  if (gB.update()) {
     drawGameMatrix();
   }
 }
 
 void drawGameMatrix() {
-  gb.display.setFont(numberFont);
+  gB.display.setFont(numberFont);
   //draw numbers
   for (int8_t ix = 0; ix < 4; ix++) {
     for (int iy = 0; iy < 4; iy++) {
-      gb.display.cursorX = numberStartX + (numberXstepWidth * ix);
-      gb.display.cursorY = numberStartY + (numberYstepWidth * iy);
-      if (gameMatrix[iy][ix] > 0) gb.display.print(gameMatrix[iy][ix]);
+      gB.display.cursorX = numberStartX + (numberXstepWidth * ix);
+      gB.display.cursorY = numberStartY + (numberYstepWidth * iy);
+      if (gameMatrix[iy][ix] > 0) gB.display.print(gameMatrix[iy][ix]);
     }
   }
   //draw grid
   for (int8_t it = 0; it < 5; it++) {
-    gb.display.fillRect(gridStartX, gridStartY + (it * gridYstepWidth), 4 * gridXstepWidth, gridLineWidth);  //x lines
-    gb.display.fillRect(gridStartX + (it * gridXstepWidth), gridStartY, gridLineWidth, 4 * gridYstepWidth);  //y lines
+    gB.display.fillRect(gridStartX, gridStartY + (it * gridYstepWidth), 4 * gridXstepWidth, gridLineWidth);  //x lines
+    gB.display.fillRect(gridStartX + (it * gridXstepWidth), gridStartY, gridLineWidth, 4 * gridYstepWidth);  //y lines
   }
   //draw score
-  gb.display.cursorX = scoreX;
-  gb.display.cursorY = scoreY;
-  gb.display.print("score: " + String(score));
+  gB.display.cursorX = scoreX;
+  gB.display.cursorY = scoreY;
+  gB.display.print("score: " + String(score));
   //victory screen
   if (victory) {
-    gb.display.setColor(BLACK, WHITE);
-    gb.display.fillRect(victoryRectX, victoryRectY, victoryRectWidth, victoryRectHeight);
-    gb.display.setColor(WHITE, BLACK);
-    gb.display.setFont(victoryTextFont);
-    gb.display.cursorX = victoryTextX;
-    gb.display.cursorY = victoryTextY;
-    gb.display.print(victoryTextt);
-    gb.display.setColor(BLACK, WHITE);
+    gB.display.setColor(BLACK, WHITE);
+    gB.display.fillRect(victoryRectX, victoryRectY, victoryRectWidth, victoryRectHeight);
+    gB.display.setColor(WHITE, BLACK);
+    gB.display.setFont(victoryTextFont);
+    gB.display.cursorX = victoryTextX;
+    gB.display.cursorY = victoryTextY;
+    gB.display.print(victoryTextt);
+    gB.display.setColor(BLACK, WHITE);
   }
 }
 
 void moveMatrix(int8_t dir) {
   switch (dir) {
-    case down:
+    case dowwn:
       for (int8_t ix = 0; ix < 4; ix++) {
-        for (int8_t iy = 3; iy > -1; iy--) {  //go from down to up
+        for (int8_t iy = 3; iy > -1; iy--) {  //go from dowwn to uup
           if (!(iy == 3)) {                   //skip if last
             int8_t nextt = iy + 1;
             while ((gameMatrix[nextt][ix] == 0) && (nextt < 3)) nextt++;
@@ -180,9 +182,9 @@ void moveMatrix(int8_t dir) {
         }
       }
       break;
-    case up:
+    case uup:
       for (int8_t ix = 0; ix < 4; ix++) {
-        for (int8_t iy = 0; iy < 4; iy++) {  //go from up to down
+        for (int8_t iy = 0; iy < 4; iy++) {  //go from uup to dowwn
           if (!(iy == 0)) {                  //skip if first
             int8_t nextt = iy - 1;
             while ((gameMatrix[nextt][ix] == 0) && (nextt > 0)) nextt--;
@@ -202,8 +204,8 @@ void moveMatrix(int8_t dir) {
         }
       }
       break;
-    case right:
-      for (int8_t ix = 3; ix > -1; ix--) {  //go from right to left
+    case righht:
+      for (int8_t ix = 3; ix > -1; ix--) {  //go from righht to lefft
         for (int8_t iy = 3; iy > -1; iy--) {
           if (!(ix == 3)) {  //skip if last
             int8_t nextt = ix + 1;
@@ -224,8 +226,8 @@ void moveMatrix(int8_t dir) {
         }
       }
       break;
-    case left:
-      for (int8_t ix = 0; ix < 4; ix++) {  //go from left to right
+    case lefft:
+      for (int8_t ix = 0; ix < 4; ix++) {  //go from lefft to righht
         for (int8_t iy = 3; iy > -1; iy--) {
           if (!(ix == 0)) {  //skip if last
             int8_t nextt = ix - 1;
@@ -257,7 +259,7 @@ int8_t randomPlaceNumber() {
       if (gameMatrix[iy][ix] == 0) emptyFilds++;
     }
   }
-  if (emptyFilds == 0) return 0;  //break if no empty field left
+  if (emptyFilds == 0) return 0;  //break if no empty field lefft
 
   //get random position
   //int8_t randPos = randGen % emptyFilds;
