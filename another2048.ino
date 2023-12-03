@@ -148,8 +148,10 @@ void loop() {
     if (gB.buttons.pressed(BTN_B)){
       //restart
       gB.titleScreen(F(initScreenText), TITLESCREEN);
+      gB.pickRandomSeed();
+      //gB.battery.show = false;  //hide the battery indicator
+      score=4;
       cleanGameMatrix();
-      //btnPressed = true;
     }
 
     if (btnPressed) {

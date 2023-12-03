@@ -30,3 +30,6 @@ Version Year/Month/Day
 0.1.10 2023/12/03
 	Restart on pressing B added
 	Added title image to title screen
+
+0.1.11 2023/1203
+	Bugfix: reset Score to 4 on restart
