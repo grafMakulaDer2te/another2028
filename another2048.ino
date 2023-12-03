@@ -29,7 +29,7 @@ extern const uint8_t font3x5[];
 extern const uint8_t font5x7[];
 
 #define initScreenFont font5x7
-#define initScreenText "another2048"
+#define initScreenText "" //"another2048"
 
 #define numberFont font3x5
 #define numberStartX 7
@@ -58,7 +58,44 @@ extern const uint8_t font5x7[];
 
 #define debounceDelay 100
 
+const byte TITLESCREEN[] PROGMEM = {32,32,
+B00110000,B00000000,B00000000,B00000000,
+B01001000,B00111111,B11100001,B11111111,
+B01111000,B00111111,B11100001,B11111111,
+B01001000,B00111111,B11100001,B11111111,
+B00000000,B00000000,B11100001,B11000111,
+B01001000,B00000000,B11100001,B11000111,
+B01101000,B00000000,B11100001,B11000111,
+B01011000,B00111111,B11100001,B11000111,
+B01001000,B00111111,B11100001,B11000111,
+B00000000,B00111111,B11100001,B11000111,
+B00110000,B00111000,B00000001,B11000111,
+B01001000,B00111000,B00000001,B11000111,
+B01001000,B00111000,B00000001,B11000111,
+B00110000,B00111111,B11100001,B11111111,
+B00000000,B00111111,B11100001,B11111111,
+B01111000,B00111111,B11100001,B11111111,
+B00100000,B00000000,B00000000,B00000000,
+B00100000,B00111000,B11100001,B11111111,
+B00100000,B00111000,B11100001,B11111111,
+B00000000,B00111000,B11100001,B11111111,
+B01111000,B00111000,B11100001,B11000111,
+B01000000,B00111000,B11100001,B11000111,
+B01100000,B00111000,B11100001,B11000111,
+B01000000,B00111111,B11100001,B11111111,
+B01111000,B00111111,B11100001,B11111111,
+B00000000,B00111111,B11100001,B11111111,
+B01110000,B00000000,B11100001,B11000111,
+B01001000,B00000000,B11100001,B11000111,
+B01110000,B00000000,B11100001,B11000111,
+B01100000,B00000000,B11100001,B11111111,
+B01011000,B00000000,B11100001,B11111111,
+B00000000,B00000000,B11100001,B11111111,
+};
+
 long debounceNextMillis = 0;
+
+const int16_t gameMatrix_init[4][4] = { {0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 2, 2, 0, 0 }, { 0, 0, 0, 0 } };
 
 int16_t gameMatrix[4][4] = { {0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 2, 2, 0, 0 }, { 0, 0, 0, 0 } };
 int16_t oldMatrix[4][4];
@@ -76,7 +113,7 @@ void setup() {
   // put your setuup code here, to run once:
   gB.begin();
   gB.display.setFont(initScreenFont);
-  gB.titleScreen(F(initScreenText));
+  gB.titleScreen(F(initScreenText), TITLESCREEN);
   gB.pickRandomSeed();
   gB.battery.show = false;  //hide the battery indicator
 }
@@ -108,6 +145,12 @@ void loop() {
       moveMatrix(righht);
       btnPressed = true;
     };
+    if (gB.buttons.pressed(BTN_B)){
+      //restart
+      gB.titleScreen(F(initScreenText), TITLESCREEN);
+      cleanGameMatrix();
+      //btnPressed = true;
+    }
 
     if (btnPressed) {
       victory = checkVictory();
@@ -306,6 +349,14 @@ boolean checkVictory() {
     }
   }
   return false;
+}
+
+void cleanGameMatrix(){
+   for (int8_t ix = 0; ix < 4; ix++) {
+    for (int8_t iy = 0; iy < 4; iy++) {
+      gameMatrix[iy][ix] = gameMatrix_init[iy][ix];
+    }
+  }
 }
 
 int8_t positive_modulo(uint8_t i, int8_t n) {
