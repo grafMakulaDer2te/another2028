@@ -7,4 +7,4 @@ Alternatively open the another2048.ino in your Arduino IDE and upload it directl
 ## Usage
 Just control it with the D-pad.
 If you play beyond 8192 the message "Victory!" appears to prevent the numbers from overflowing the cells.
-Note that at the moment there is no game-over screen. If you can't move anymore then you have lost. I'm going to change it soon.
+Note that at the moment there is no game-over screen. If you can't move anymore then you have lost. I'm going to change it soon. Restart by pressing B.
