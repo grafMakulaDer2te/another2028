@@ -149,9 +149,10 @@ void loop() {
     };
     if (gB.buttons.pressed(BTN_B)){
       //restart
-      setup();
+      gB.titleScreen(F(initScreenText), TITLESCREEN);
+      gB.pickRandomSeed();
+      gB.battery.show = false;  //hide the battery indicator
       cleanGameMatrix();
-      //btnPressed = true;
     }
 
     if (btnPressed) {
@@ -359,7 +360,6 @@ void cleanGameMatrix(){
       gameMatrix[iy][ix] = gameMatrix_init[iy][ix];
     }
   }
-  return false;
 }
 
 int8_t positive_modulo(uint8_t i, int8_t n) {
