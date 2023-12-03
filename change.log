@@ -29,3 +29,8 @@ Version Year/Month/Day
 
 0.1.8 2023/11/26
 	Code for Gamebuino Classic and Meta adapted to each other
+
+0.1.9 2023/12/03
+	Picture added to title screen
+	Key B added as a restart key
+		press B to restart the entire game
