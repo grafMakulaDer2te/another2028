@@ -152,6 +152,7 @@ void loop() {
       gB.titleScreen(F(initScreenText), TITLESCREEN);
       gB.pickRandomSeed();
       gB.battery.show = false;  //hide the battery indicator
+      score=4;
       cleanGameMatrix();
     }
 

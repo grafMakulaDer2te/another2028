@@ -39,3 +39,7 @@ Version Year/Month/Day
 	coding error fixed
 		function void cleanGameMatrix() does not return anything, so I removed "return flse" statement
 	recall of setup() function when b is pressed removed and repaced with the titlescreen function
+
+0.1.11 2023/1203
+	recal of setup() replaced by calling the fuction tidleScreen() on restart
+	Bugfix: reset of the score to 4 on restart
